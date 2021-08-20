@@ -25,15 +25,25 @@ define profile_wireguard::interface (
 
   if $manage_firewall_entry {
     $peers.each | $peer_name, $peer_options | {
-      $_peer_address = regsubst($peer_options['endpoint'], ':.*', '')
+      if $peer_options['endpoint'] {
+        $_peer_address = regsubst($peer_options['endpoint'], ':.*', '')
 
-      firewall { "${listen_port} wireguard accept ${name}":
-        source      => $_peer_address,
-        destination => $facts['networking']['ip'],
-        dport       => $listen_port,
-        proto       => 'udp',
-        action      => 'accept',
-        chain       => 'WIREGUARD',
+        firewall { "${listen_port} wireguard accept ${peer_name}":
+          source      => $_peer_address,
+          destination => $facts['networking']['ip'],
+          dport       => $listen_port,
+          proto       => 'udp',
+          action      => 'accept',
+          chain       => 'WIREGUARD',
+        }
+      } else {
+        firewall { "${listen_port} wireguard accept ${peer_name}":
+          destination => $facts['networking']['ip'],
+          dport       => $listen_port,
+          proto       => 'udp',
+          action      => 'accept',
+          chain       => 'WIREGUARD',
+        }
       }
     }
   }
