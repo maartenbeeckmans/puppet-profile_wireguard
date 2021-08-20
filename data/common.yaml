@@ -3,5 +3,6 @@ profile_wireguard::manage_repo: false
 profile_wireguard::manage_sysctl: true
 profile_wireguard::manage_firewall_entry: true
 profile_wireguard::wireguard_interfaces: {}
-profile_wireguard::wireguard_interface_defaults: {}
+profile_wireguard::wireguard_interface_defaults:
+  method: wg-quick
 ...

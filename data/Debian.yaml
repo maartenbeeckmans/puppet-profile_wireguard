@@ -1,0 +1,3 @@
+---
+profile_wireguard::wireguard_interface_defaults:
+  method: ifupd

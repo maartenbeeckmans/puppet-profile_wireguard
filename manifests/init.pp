@@ -1,14 +1,11 @@
 #
 class profile_wireguard (
-  Boolean $manage_repo,
   Boolean $manage_sysctl,
   Boolean $manage_firewall_entry,
   Hash    $wireguard_interfaces,
   Hash    $wireguard_interface_defaults,
 ) {
-  class { 'wireguard':
-    manage_repo => $manage_repo,
-  }
+  include ::wireguard
 
   if $manage_sysctl {
     if ! defined(Sysctl['net.ipv4.ip_forward']){
