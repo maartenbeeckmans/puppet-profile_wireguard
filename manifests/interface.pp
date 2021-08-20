@@ -1,15 +1,15 @@
 #
 define profile_wireguard::interface (
-  String                            $private_key,
-  Stdlib::Port                      $listen_port,
-  Enum['ifupd', 'wg-quick', 'none'] $method,
-  Stdlib::IP::Address::V4           $address4,
-  Stdlib::IP::Address::V4::Nosubnet $gateway4,
-  Enum['present', 'absent']         $ensure                = 'present',
-  Array[Stdlib::IP::Address]        $dns                   = [],
-  Optional[Integer[1,9202]]         $mtu                   = undef,
-  Hash                              $peers                 = {},
-  Boolean                           $manage_firewall_entry = $::profile_wireguard::manage_firewall_entry,
+  String                                      $private_key,
+  Stdlib::Port                                $listen_port,
+  Enum['ifupd', 'wg-quick', 'none']           $method,
+  Optional[Stdlib::IP::Address::V4]           $address4,
+  Enum['present', 'absent']                   $ensure                = 'present',
+  Optional[Stdlib::IP::Address::V4::Nosubnet] $gateway4              = undef,
+  Array[Stdlib::IP::Address]                  $dns                   = [],
+  Optional[Integer[1,9202]]                   $mtu                   = undef,
+  Hash                                        $peers                 = {},
+  Boolean                                     $manage_firewall_entry = $::profile_wireguard::manage_firewall_entry,
 ) {
   wireguard::interface { $name:
     ensure      => $ensure,
