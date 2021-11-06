@@ -1,3 +1,4 @@
 ---
 profile_wireguard::wireguard_interface_defaults:
+  addresses: []
   method: ifupd
