@@ -60,11 +60,13 @@ class profile_wireguard (
 
     $_dports = $wireguard_interfaces.map | $if, $if_config | { $if_config['listen_port'] }
 
-    firewall { '00001 wireguard to wireguard chain':
-      proto => 'udp',
-      dport => $_dports,
-      chain => 'INPUT',
-      jump  => 'WIREGUARD',
+    if $_dports != [] {
+      firewall { '00001 wireguard to wireguard chain':
+        proto => 'udp',
+        dport => $_dports,
+        chain => 'INPUT',
+        jump  => 'WIREGUARD',
+      }
     }
   }
 
